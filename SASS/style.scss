@@ -1,0 +1,159 @@
+$white: rgb(255,255,255);
+$whiteA: rgba(255,255,255,0.5);
+$black: rgb(0,0,0);
+$blackA: rgba(0,0,0,0.5);
+$gray: rgb(127,127,127);
+$grayA: rgba(127,127,127,0.5);
+$orange: rgb(255,127,0);
+$orangeA: rgba(255,127,0,0.5);
+$orangeI: rgb(0,127,255);
+$orangeIA: rgba(0,127,255,0.5);
+$bodyFirstColor: $orange;
+
+@mixin FlexCenter
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin ColorAndBackground($color, $background)
+{
+  color: $color;
+  background: $background;
+}
+
+@mixin WidthAndHeight($width, $height)
+{
+  width: $width;
+  height: $height;
+}
+
+*
+{
+  padding: 0;
+  margin: 0;
+  font-family: "Arial Black", Serif;
+  font-size: 5vmin;
+}
+
+button,
+button:active,
+button:focus  {
+  border:none;
+}
+
+body
+{
+  @include FlexCenter();
+  @include WidthAndHeight(100%, 100vh);
+  background: linear-gradient(141.5deg, $bodyFirstColor 50%, $black 50%);
+  @media (orientation: landscape) {
+    > #Calculator
+    {
+      @include WidthAndHeight(55vmin, 75vmin);
+      border-radius: 3vmin;
+      box-shadow: 0 0 3vmin 3vmin $whiteA;
+      background: $white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5vmin;
+      > #window
+      {
+        @include WidthAndHeight(54.2vmin, 11.2vmin);
+        border: 0.4vmin solid $white;
+        box-shadow: 0 0 2vmin 2vmin $grayA;
+        background: $orange;
+        border-radius: 2vmin;
+        > div
+        {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          font-size: 3vmin;
+          padding: 0.5vmin 1vmin;
+          width: 52.2vmin;
+          height: 4.6vmin;
+        }
+        > #Up
+        {
+          color: $black;
+        }
+        > #Bottom
+        {
+          color: $white;
+        }
+      }
+      > #panel
+      {
+        @include WidthAndHeight(55vmin, 55vmin);
+        display: grid;
+        grid-template-columns: repeat(4, 10.5vmin);
+        grid-template-row: repeat(5, 8vmin);
+        justify-content: space-between;
+        align-content: space-between;
+        > button
+        {
+          @include WidthAndHeight(10.5vmin, 8vmin);
+          box-shadow: 0 0 1vmin 1vmin $grayA;
+          border-radius: 1vmin;
+          overflow: hidden;
+          border: none;
+          transition: 0.75s box-shadow;
+          > div
+          {
+            position: relative;
+            @include WidthAndHeight(10.5vmin, 8vmin);
+            @include ColorAndBackground($black, $white);
+            @include FlexCenter();
+            transition: 1s transform, 0.75s color, 0.75s background;
+          }
+          > .First
+          {
+            transform: translate(0, 0);
+          }
+          > .Second
+          {
+            transform: translate(0, 0);
+          }
+          > .Orange
+          {
+            color: $orange;
+          }
+        }
+        > button:hover
+        {
+          box-shadow: $blackA;
+          > div
+          {
+            @include ColorAndBackground($white, $black);
+          }
+          > .Orange
+          {
+            color: $orangeI;
+          }
+        }
+        > .ButtonOrange
+        {
+          box-shadow: 0 0 1vmin 1vmin $orangeA;
+          transition: 0.75s box-shadow;
+          > .Orange
+          {
+            @include ColorAndBackground($black, $orange);
+            transition: 0.75s background, 0.75s color, 1s transform;
+          }
+        }
+        > .ButtonOrange:hover
+        {
+          box-shadow: 0 0 1vmin 1vmin $orangeIA;
+          > .Orange
+          {
+            @include ColorAndBackground($white, $orangeI);
+          }
+        }
+      }
+    }
+  }
+}

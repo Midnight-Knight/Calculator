@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type="image/png" rel="icon" href="PNG/favicon/free-icon-calculator-891175.png">
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link type="text/css" href="SASS/style.css" rel="stylesheet">
+    <script type="text/javascript" language="JavaScript" src="TS/script.js"></script>
+</head>
+<body>
+    <div id="Calculator">
+        <div id="window">
+            <div id="Up"></div>
+            <div id="Bottom"></div>
+        </div>
+        <div id="panel">
+            <!-- line 1 -->
+            <button class="ButtonOrange" onclick="AllDel()">
+                <div class="Orange">C</div>
+            </button>
+            <button class="ButtonOrange" onclick="Del()">
+                <div class="Orange">⌫</div>
+            </button>
+            <button onclick="Add('%')">
+                <div class="First Orange">%</div>
+                <div class="Second Orange">^</div>
+            </button>
+            <button onclick="Add('/')">
+                <div class="First Orange">÷</div>
+                <div class="Second Orange">√</div>
+            </button>
+            <!-- line 2 -->
+            <button onclick="Add('7')">
+                <div>7</div>
+            </button>
+            <button onclick="Add('8')">
+                <div>8</div>
+            </button>
+            <button ONCLICK="Add('9')">
+                <div>9</div>
+            </button>
+            <button onclick="Add('*')">
+                <div class="First Orange">×</div>
+                <div class="Second Orange">!</div>
+            </button>
+            <!-- line 3 -->
+            <button onclick="Add('4')">
+                <div>4</div>
+            </button>
+            <button onclick="Add('5')">
+                <div>5</div>
+            </button>
+            <button onclick="Add('6')">
+                <div>6</div>
+            </button>
+            <button onclick="Add('-')">
+                <div class="First Orange">-</div>
+                <div class="Second Orange">log</div>
+            </button>
+            <!-- line 4 -->
+            <button onclick="Add('1')">
+                <div>1</div>
+            </button>
+            <button onclick="Add('2')">
+                <div>2</div>
+            </button>
+            <button onclick="Add('3')">
+                <div>3</div>
+            </button>
+            <button onclick="Add('+')">
+                <div class="First Orange">+</div>
+                <div class="Second Orange">+/-</div>
+            </button>
+            <!-- line 5 -->
+            <button onclick="clickMenu()" class="ButtonOrange">
+                <div class="First Orange">❏</div>
+                <div class="Second Orange">❐</div>
+            </button>
+            <button onclick="Add('0')">
+                <div>0</div>
+            </button>
+            <button onclick="Add(',')">
+                <div>,</div>
+            </button>
+            <button class="ButtonOrange">
+                <div class="Orange">=</div>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
