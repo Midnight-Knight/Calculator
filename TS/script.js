@@ -62,6 +62,7 @@ function boolException(x) {
     }
 }
 function boolExceptionTwoCell(x, y) {
+    console.log(x + " " + y);
     switch (x) {
         case ',':
         case '+':
@@ -152,7 +153,6 @@ function Add(x) {
                     case true:
                         {
                             switch (x) {
-                                case '0':
                                 case ',':
                                     {
                                         break;
@@ -208,7 +208,18 @@ function Add(x) {
                                     }
                                 case false:
                                     {
-                                        OperationArray.push(x);
+                                        switch (x) {
+                                            case ",":
+                                                {
+                                                    break;
+                                                }
+                                            default:
+                                                {
+                                                    OperationArray.push(x);
+                                                    break;
+                                                }
+                                        }
+                                        break;
                                     }
                             }
                             break;
