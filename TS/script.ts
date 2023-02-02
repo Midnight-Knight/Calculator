@@ -1,68 +1,221 @@
 let OperationArray:Array<string> = new Array(0);
 let bool:boolean = false;
-function Summation(x:number, y:number)
+function Summation(x:number, y:number): number
 {
     return x + y;
 }
 
-function Subtraction(x:number, y:number)
+function Subtraction(x:number, y:number): number
 {
     return x - y;
 }
 
-function Multiplication(x:number, y:number)
+function Multiplication(x:number, y:number): number
 {
     return x * y;
 }
 
-function Division(x:number, y:number)
+function Division(x:number, y:number): number
 {
     return x / y;
 }
 
-function Remains(x:number, y:number)
+function Remains(x:number, y:number): number
 {
     return x % y;
 }
 
-function Degree(x:number, y:number)
+function Degree(x:number, y:number): number
 {
-    return Math.pow(x,y);
+    var result:number = 1;
+    while (y > 0)
+    {
+        if (y % 2 === 1)
+        {
+            result *= x;
+        }
+        x *= x;
+        y = Math.floor(y / 2);
+    }
+    return result;
 }
 
-function Root(x:number)
+function Root(x:number): number
 {
-    return Math.sqrt(x);
+    var root: number = x;
+    var last: number;
+    do {
+        last = root;
+        root = (root + x / root) / 2;
+    } while (root !== last)
+    return root;
 }
 
-function log(x:number)
+function log(x:number): number
 {
     return Math.log(x);
 }
 
-function Add(x:string)
+function boolException(x:string): boolean
 {
-    if (OperationArray.length == 0)
+    switch (x)
     {
-        if (x === '1' || x === '2' || x === '3' || x === '4' || x === '5' || x === '6' || x === '7' || x === '8' || x === '9')
+        case '0'.toString():case ',':
+        case '-':case '+':case '*':case '/':case '%':
+        case '+/-':case 'log':case '!':case '^':case '√':
         {
-            OperationArray.push(x);
+            return true;
+        }
+        default:
+        {
+            return false;
         }
     }
-    else if (x === '1' || x === '2' || x === '3' || x === '4' || x === '5' || x === '6' || x === '7' || x === '8' || x === '9' || x === '0' || x === ',')
-    {
-        if (OperationArray[OperationArray.length-1] === '1')
-        {
-            OperationArray[OperationArray.length - 1] += x;
-        }
-        else {
+}
 
+function boolExceptionTwoCell(x:string, y:string):boolean
+{
+    switch (x)
+    {
+        case ',':case '+':case '-':case '*':case '/':case '%':
+        {
+            switch (y)
+            {
+                case ',':case '+':case '-':case '*':case '/':case '%':
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
+        }
+        default:
+        {
+            return false;
         }
     }
-    else
+}
+
+function boolNumberIs(x:string):boolean
+{
+    switch (x[x.length-1])
     {
-        OperationArray.push(x);
+        case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':case '0':case ',':
+        {
+            return true;
+        }
+        default:
+        {
+            return false;
+        }
     }
+}
+
+function boolSign(x:string): boolean
+{
+    switch (x)
+    {
+        case ',':
+        case '-':case '+':case '*':case '/':case '%':
+        case '+/-':case 'log':case '!':case '^':case '√':
+        {
+            return true;
+        }
+        default:
+        {
+            return false;
+        }
+    }
+}
+
+function Add(x:string):void
+{
+    switch (OperationArray.length)
+    {
+        case 0:
+        {
+            switch (boolNumberIs(x)) {
+                case true:
+                {
+                    switch (x) {
+                        case '0':case ',':
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            OperationArray.push(x);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+        default:
+        {
+            switch (boolNumberIs(x))
+            {
+                case true:
+                {
+                    switch (boolNumberIs(OperationArray[OperationArray.length-1])) {
+                        case true:
+                        {
+                            switch (boolExceptionTwoCell(OperationArray[OperationArray.length-1][OperationArray[OperationArray.length-1].length-1],x)) {
+                                case false:
+                                {
+                                    OperationArray[OperationArray.length-1] += x;
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case false:
+                        {
+                            OperationArray.push(x);
+                        }
+                    }
+                    break;
+                }
+                case false:
+                {
+                    switch (boolNumberIs(OperationArray[OperationArray.length-1]))
+                    {
+                        case true:
+                        {
+                            switch (x) {
+                                case ',':
+                                {
+                                    break;
+                                }
+                                default:
+                                {
+                                    switch (OperationArray[OperationArray.length-1][OperationArray[OperationArray.length-1].length-1]) {
+                                        case ',':
+                                        {
+                                            break;
+                                        }
+                                        default:
+                                        {
+                                            OperationArray.push(x);
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
     var str:string = "";
     for (var i:number = 0; i < OperationArray.length; ++i)
     {
@@ -71,9 +224,22 @@ function Add(x:string)
     document.getElementById("Up").innerHTML = str;
 }
 
-function Del()
+function Del(): void
 {
-    OperationArray.pop();
+    switch (OperationArray[OperationArray.length-1].length)
+    {
+        case 1:
+        {
+            OperationArray.pop();
+            break;
+        }
+        default:
+        {
+            OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1].slice(0, -1);
+            break;
+        }
+    }
+
     var str:string = "";
     for (var i:number = 0; i < OperationArray.length; ++i)
     {
@@ -89,13 +255,13 @@ function Del()
     document.getElementById("Up").innerHTML = str;
 }
 
-function AllDel()
+function AllDel(): void
 {
     OperationArray.length = 0;
     document.getElementById('Up').innerHTML = "";
 }
 
-function clickMenu()
+function clickMenu(): void
 {
     var ArrClassFirst:NodeListOf<HTMLElement> = document.querySelectorAll('.First');
     var ArrClassSecond:NodeListOf<HTMLElement> = document.querySelectorAll('.Second');

@@ -16,29 +16,207 @@ function Remains(x, y) {
     return x % y;
 }
 function Degree(x, y) {
-    return Math.pow(x, y);
+    var result = 1;
+    while (y > 0) {
+        if (y % 2 === 1) {
+            result *= x;
+        }
+        x *= x;
+        y = Math.floor(y / 2);
+    }
+    return result;
 }
 function Root(x) {
-    return Math.sqrt(x);
+    var root = x;
+    var last;
+    do {
+        last = root;
+        root = (root + x / root) / 2;
+    } while (root !== last);
+    return root;
 }
 function log(x) {
     return Math.log(x);
 }
+function boolException(x) {
+    switch (x) {
+        case '0'.toString():
+        case ',':
+        case '-':
+        case '+':
+        case '*':
+        case '/':
+        case '%':
+        case '+/-':
+        case 'log':
+        case '!':
+        case '^':
+        case '√':
+            {
+                return true;
+            }
+        default:
+            {
+                return false;
+            }
+    }
+}
+function boolExceptionTwoCell(x, y) {
+    switch (x) {
+        case ',':
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+        case '%':
+            {
+                switch (y) {
+                    case ',':
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                    case '%':
+                        {
+                            return true;
+                        }
+                    default:
+                        {
+                            return false;
+                        }
+                }
+            }
+        default:
+            {
+                return false;
+            }
+    }
+}
+function boolNumberIs(x) {
+    switch (x[x.length - 1]) {
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '0':
+        case ',':
+            {
+                return true;
+            }
+        default:
+            {
+                return false;
+            }
+    }
+}
+function boolSign(x) {
+    switch (x) {
+        case ',':
+        case '-':
+        case '+':
+        case '*':
+        case '/':
+        case '%':
+        case '+/-':
+        case 'log':
+        case '!':
+        case '^':
+        case '√':
+            {
+                return true;
+            }
+        default:
+            {
+                return false;
+            }
+    }
+}
 function Add(x) {
-    if (OperationArray.length == 0) {
-        if (x === '1' || x === '2' || x === '3' || x === '4' || x === '5' || x === '6' || x === '7' || x === '8' || x === '9') {
-            OperationArray.push(x);
-        }
-    }
-    else if (x === '1' || x === '2' || x === '3' || x === '4' || x === '5' || x === '6' || x === '7' || x === '8' || x === '9' || x === '0' || x === ',') {
-        if (OperationArray[OperationArray.length - 1] === '1') {
-            OperationArray[OperationArray.length - 1] += x;
-        }
-        else {
-        }
-    }
-    else {
-        OperationArray.push(x);
+    switch (OperationArray.length) {
+        case 0:
+            {
+                switch (boolNumberIs(x)) {
+                    case true:
+                        {
+                            switch (x) {
+                                case '0':
+                                case ',':
+                                    {
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        OperationArray.push(x);
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                }
+                break;
+            }
+        default:
+            {
+                switch (boolNumberIs(x)) {
+                    case true:
+                        {
+                            switch (boolNumberIs(OperationArray[OperationArray.length - 1])) {
+                                case true:
+                                    {
+                                        switch (boolExceptionTwoCell(OperationArray[OperationArray.length - 1][OperationArray[OperationArray.length - 1].length - 1], x)) {
+                                            case false:
+                                                {
+                                                    OperationArray[OperationArray.length - 1] += x;
+                                                    break;
+                                                }
+                                        }
+                                        break;
+                                    }
+                                case false:
+                                    {
+                                        OperationArray.push(x);
+                                    }
+                            }
+                            break;
+                        }
+                    case false:
+                        {
+                            switch (boolNumberIs(OperationArray[OperationArray.length - 1])) {
+                                case true:
+                                    {
+                                        switch (x) {
+                                            case ',':
+                                                {
+                                                    break;
+                                                }
+                                            default:
+                                                {
+                                                    switch (OperationArray[OperationArray.length - 1][OperationArray[OperationArray.length - 1].length - 1]) {
+                                                        case ',':
+                                                            {
+                                                                break;
+                                                            }
+                                                        default:
+                                                            {
+                                                                OperationArray.push(x);
+                                                                break;
+                                                            }
+                                                    }
+                                                    break;
+                                                }
+                                        }
+                                    }
+                                    break;
+                            }
+                            break;
+                        }
+                }
+            }
     }
     var str = "";
     for (var i = 0; i < OperationArray.length; ++i) {
@@ -47,7 +225,18 @@ function Add(x) {
     document.getElementById("Up").innerHTML = str;
 }
 function Del() {
-    OperationArray.pop();
+    switch (OperationArray[OperationArray.length - 1].length) {
+        case 1:
+            {
+                OperationArray.pop();
+                break;
+            }
+        default:
+            {
+                OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1].slice(0, -1);
+                break;
+            }
+    }
     var str = "";
     for (var i = 0; i < OperationArray.length; ++i) {
         if (OperationArray[i].toString() === ',' || (i != 0 && ((OperationArray[i - 1].toString() === '1' || OperationArray[i - 1].toString() === '2' || OperationArray[i - 1].toString() === '3' || OperationArray[i - 1].toString() === '4' || OperationArray[i - 1].toString() === '5' || OperationArray[i - 1].toString() === '6' || OperationArray[i - 1].toString() === '7' || OperationArray[i - 1].toString() === '8' || OperationArray[i - 1].toString() === '9' || OperationArray[i - 1].toString() === '0' || OperationArray[i - 1].toString() === ',') && (OperationArray[i].toString() === '1' || OperationArray[i].toString() === '2' || OperationArray[i].toString() === '3' || OperationArray[i].toString() === '4' || OperationArray[i].toString() === '5' || OperationArray[i].toString() === '6' || OperationArray[i].toString() === '7' || OperationArray[i].toString() === '8' || OperationArray[i].toString() === '9' || OperationArray[i].toString() === '0')))) {
