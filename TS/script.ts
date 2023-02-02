@@ -113,6 +113,18 @@ function boolNumberIs(x:string):boolean
     }
 }
 
+function boolPoint(x:string): boolean
+{
+    for (var i:number = 0; i < x.length; ++i)
+    {
+        if (x[i] === ',')
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 function boolSign(x:string): boolean
 {
     switch (x)
@@ -167,7 +179,28 @@ function Add(x:string):void
                             switch (boolExceptionTwoCell(OperationArray[OperationArray.length-1][OperationArray[OperationArray.length-1].length-1],x)) {
                                 case false:
                                 {
-                                    OperationArray[OperationArray.length-1] += x;
+                                    switch (boolPoint(OperationArray[OperationArray.length-1])) {
+                                        case false:
+                                        {
+                                            OperationArray[OperationArray.length-1] += x;
+                                            break;
+                                        }
+                                        case true:
+                                        {
+                                            switch (x) {
+                                                case ',':
+                                                {
+                                                    break;
+                                                }
+                                                default:
+                                                {
+                                                    OperationArray[OperationArray.length-1] += x;
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    }
                                     break;
                                 }
                             }
