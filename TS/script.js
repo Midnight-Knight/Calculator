@@ -176,7 +176,23 @@ function Add(x) {
                     case "%":
                     case "^":
                         {
-                            if (boolNumber(ActualCell) === true) {
+                            if (ActualCell[0] === "l") {
+                                switch (ActualCell[1]) {
+                                    case "0":
+                                        {
+                                            if (ActualCell.length > 3) {
+                                                OperationArray.push(x);
+                                            }
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            OperationArray.push(x);
+                                            break;
+                                        }
+                                }
+                            }
+                            else if (boolNumber(ActualCell) === true) {
                                 OperationArray.push(x);
                             }
                             break;
@@ -220,19 +236,6 @@ function Add(x) {
                                         }
                                         break;
                                     }
-                                case "s":
-                                case "l":
-                                    {
-                                        if (ActualCell.length !== 1) {
-                                            if (ActualCell[1] !== "-") {
-                                                OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1][0] + "-" + OperationArray[OperationArray.length - 1].slice(1);
-                                            }
-                                            else {
-                                                OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1][0] + OperationArray[OperationArray.length - 1].slice(2);
-                                            }
-                                        }
-                                        break;
-                                    }
                             }
                             break;
                         }
@@ -253,9 +256,6 @@ function Del() {
             {
                 if (OperationArray[OperationArray.length - 1].length === 2 && OperationArray[OperationArray.length - 1][0] === "-") {
                     OperationArray.pop();
-                }
-                else if (OperationArray[OperationArray.length - 1].length === 3 && OperationArray[OperationArray.length - 1][1] === "-") {
-                    OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1][0];
                 }
                 else {
                     OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1].slice(0, -1);

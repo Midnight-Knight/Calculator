@@ -155,7 +155,26 @@ function Add(x:string):void
                 }
                 case "+": case "-":case "*":case "/":case "%":case "^":
                 {
-                    if (boolNumber(ActualCell) === true)
+                    if (ActualCell[0] === "l")
+                    {
+                        switch (ActualCell[1])
+                        {
+                            case "0":
+                            {
+                                if (ActualCell.length > 3)
+                                {
+                                    OperationArray.push(x);
+                                }
+                                break;
+                            }
+                            default:
+                            {
+                                OperationArray.push(x);
+                                break;
+                            }
+                        }
+                    }
+                    else if (boolNumber(ActualCell) === true)
                     {
                         OperationArray.push(x);
                     }
@@ -194,21 +213,6 @@ function Add(x:string):void
                             }
                             break;
                         }
-                        case "s":case "l":
-                        {
-                            if(ActualCell.length !== 1)
-                            {
-                                if(ActualCell[1] !== "-")
-                                {
-                                    OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1][0] + "-" + OperationArray[OperationArray.length-1].slice(1);
-                                }
-                                else
-                                {
-                                    OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1][0] + OperationArray[OperationArray.length-1].slice(2);
-                                }
-                            }
-                            break;
-                        }
                     }
                     break;
                 }
@@ -234,10 +238,6 @@ function Del(): void
             {
                 OperationArray.pop();
             }
-            else if(OperationArray[OperationArray.length-1].length === 3 && OperationArray[OperationArray.length-1][1] === "-")
-            {
-                OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1][0];
-            }
             else
             {
                 OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1].slice(0, -1);
@@ -245,15 +245,14 @@ function Del(): void
             break;
         }
     }
-
     StrHTML();
 }
 
 function clickMenu(): void
 {
-    var ArrClassFirst:NodeListOf<HTMLElement> = document.querySelectorAll('.First');
-    var ArrClassSecond:NodeListOf<HTMLElement> = document.querySelectorAll('.Second');
-    var ArrClassButtonWithTwoFunction:NodeListOf<HTMLElement> = document.querySelectorAll('.ButtonWithTwoFunction');
+    const ArrClassFirst:NodeListOf<HTMLElement> = document.querySelectorAll('.First');
+    const ArrClassSecond:NodeListOf<HTMLElement> = document.querySelectorAll('.Second');
+    const ArrClassButtonWithTwoFunction:NodeListOf<HTMLElement> = document.querySelectorAll('.ButtonWithTwoFunction');
     var translate:string;
     switch (bool)
     {
