@@ -37,9 +37,8 @@ $bodyFirstColor: $orange;
   font-size: 5vmin;
 }
 
-button,
-button:active,
-button:focus  {
+button, button:active, button:focus
+{
   border:none;
 }
 
@@ -48,7 +47,6 @@ body
   @include FlexCenter();
   @include WidthAndHeight(100%, 100vh);
   background: linear-gradient(141.5deg, $bodyFirstColor 50%, $black 50%);
-  @media (orientation: landscape) {
     > #Calculator
     {
       @include WidthAndHeight(55vmin, 75vmin);
@@ -76,6 +74,9 @@ body
           padding: 0.5vmin 1vmin;
           width: 52.2vmin;
           height: 4.6vmin;
+          text-overflow: clip;
+          overflow: hidden;
+          white-space: nowrap;
         }
         > #Up
         {
@@ -155,5 +156,4 @@ body
         }
       }
     }
-  }
 }

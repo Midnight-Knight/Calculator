@@ -56,69 +56,13 @@ function log(x:number): number
     return Math.log(x);
 }
 
-function boolException(x:string): boolean
-{
-    switch (x)
-    {
-        case '0'.toString():case ',':
-        case '-':case '+':case '*':case '/':case '%':
-        case '+/-':case 'log':case '!':case '^':case '√':
-        {
-            return true;
-        }
-        default:
-        {
-            return false;
-        }
-    }
-}
 
-function boolExceptionTwoCell(x:string, y:string):boolean
-{
-    console.log(x + " " + y);
-    switch (x)
-    {
-        case ',':case '+':case '-':case '*':case '/':case '%':
-        {
-            switch (y)
-            {
-                case ',':case '+':case '-':case '*':case '/':case '%':
-                {
-                    return true;
-                }
-                default:
-                {
-                    return false;
-                }
-            }
-        }
-        default:
-        {
-            return false;
-        }
-    }
-}
 
-function boolNumberIs(x:string):boolean
-{
-    switch (x[x.length-1])
-    {
-        case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':case '0':case ',':
-        {
-            return true;
-        }
-        default:
-        {
-            return false;
-        }
-    }
-}
-
-function boolPoint(x:string): boolean
+function boolSign(x:string, y:string):boolean
 {
     for (var i:number = 0; i < x.length; ++i)
     {
-        if (x[i] === ',')
+        if (x[i] === y)
         {
             return true;
         }
@@ -126,13 +70,11 @@ function boolPoint(x:string): boolean
     return false;
 }
 
-function boolSign(x:string): boolean
+function boolNumber(x:string)
 {
-    switch (x)
+    switch (x[x.length-1])
     {
-        case ',':
-        case '-':case '+':case '*':case '/':case '%':
-        case '+/-':case 'log':case '!':case '^':case '√':
+        case "0":case "1":case "2":case "3":case "4":case "5":case "6":case "7":case "8":case "9":
         {
             return true;
         }
@@ -143,26 +85,60 @@ function boolSign(x:string): boolean
     }
 }
 
+function StrHTML(x: string = "Up"): void {
+    console.log(OperationArray.toString());
+    var str:string = "";
+    for (var i:number = 0; i < OperationArray.length; ++i)
+    {
+        str += " ";
+        if (OperationArray[i][0] === "!")
+        {
+            str += "!";
+            str += "(";
+            if (OperationArray[i].length !== 1)
+            {
+                str += OperationArray[i].slice(1);
+            }
+            str += ")";
+        }
+        else if(OperationArray[i][0] === "s")
+        {
+            str += "√";
+            str += "(";
+            if (OperationArray[i].length !== 1)
+            {
+                str += OperationArray[i].slice(1);
+            }
+            str += ")";
+        }
+        else if(OperationArray[i][0] === "l")
+        {
+            str += "log";
+            str += "(";
+            if (OperationArray[i].length !== 1)
+            {
+                str += OperationArray[i].slice(1);
+            }
+            str += ")";
+        }
+        else
+        {
+            str += OperationArray[i];
+        }
+    }
+    document.getElementById(x).innerHTML = str;
+}
 function Add(x:string):void
 {
     switch (OperationArray.length)
     {
         case 0:
         {
-            switch (boolNumberIs(x)) {
-                case true:
+            switch (x)
+            {
+                case "0":case "1":case "2":case "3":case "4":case "5":case "6":case "7":case "8":case "9":case "s":case "!":case "l":
                 {
-                    switch (x) {
-                        case ',':
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            OperationArray.push(x);
-                            break;
-                        }
-                    }
+                    OperationArray.push(x);
                     break;
                 }
             }
@@ -170,104 +146,98 @@ function Add(x:string):void
         }
         default:
         {
-            switch (boolNumberIs(x))
+            const ActualCell:string = OperationArray[OperationArray.length-1];
+            switch (x)
             {
-                case true:
+                case "0":case "1":case "2":case "3":case "4":case "5":case "6":case "7":case "8":case "9":
                 {
-                    switch (boolNumberIs(OperationArray[OperationArray.length-1])) {
-                        case true:
+                    switch (ActualCell[ActualCell.length-1])
+                    {
+                        case "0":case "1":case "2":case "3":case "4":case "5":case "6":case "7":case "8":case "9":case "s":case "!":case "l":case ",":
                         {
-                            switch (boolExceptionTwoCell(OperationArray[OperationArray.length-1][OperationArray[OperationArray.length-1].length-1],x)) {
-                                case false:
-                                {
-                                    switch (boolPoint(OperationArray[OperationArray.length-1])) {
-                                        case false:
-                                        {
-                                            OperationArray[OperationArray.length-1] += x;
-                                            break;
-                                        }
-                                        case true:
-                                        {
-                                            switch (x) {
-                                                case ',':
-                                                {
-                                                    break;
-                                                }
-                                                default:
-                                                {
-                                                    OperationArray[OperationArray.length-1] += x;
-                                                    break;
-                                                }
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
+                            OperationArray[OperationArray.length-1] += x;
                             break;
                         }
-                        case false:
+                        case "+":case "-":case "*":case "/":case "%":case "^":
                         {
-                            switch (x)
-                            {
-                                case ",":
-                                {
-                                    break;
-                                }
-                                default:
-                                {
-                                    OperationArray.push(x);
-                                    break;
-                                }
-                            }
+                            OperationArray.push(x);
                             break;
                         }
                     }
                     break;
                 }
-                case false:
+                case ",":
                 {
-                    switch (boolNumberIs(OperationArray[OperationArray.length-1]))
+                    if(boolSign(ActualCell, ",") === false && boolNumber(ActualCell) === true)
                     {
-                        case true:
+                        OperationArray[OperationArray.length-1] += x;
+                    }
+                    break;
+                }
+                case "+": case "-":case "*":case "/":case "%":case "^":
+                {
+                    if (boolNumber(ActualCell) === true)
+                    {
+                        OperationArray.push(x);
+                    }
+                    break;
+                }
+                case "s":case "l":case "!":
+                {
+                    if(boolSign(ActualCell, "+") === true || boolSign(ActualCell, "-") === true || boolSign(ActualCell, "*") === true || boolSign(ActualCell, "/") === true || boolSign(ActualCell, "%") === true || boolSign(ActualCell, "^") === true)
+                    {
+                        OperationArray.push(x);
+                    }
+                    break;
+                }
+                case "z":
+                {
+                    switch (ActualCell[0])
+                    {
+                        case "0":
                         {
-                            switch (x) {
-                                case ',':
+                            if (ActualCell.length !== 1)
+                            {
+                                OperationArray[OperationArray.length - 1] = "-".concat(OperationArray[OperationArray.length - 1]);
+                            }
+                            break;
+                        }
+                        case "1":case "2":case "3":case "4":case "5":case "6":case "7":case "8":case "9":
+                        {
+                            OperationArray[OperationArray.length - 1] = "-".concat(OperationArray[OperationArray.length - 1]);
+                            break;
+                        }
+                        case "-":
+                        {
+                            if (ActualCell.length !== 1)
+                            {
+                                OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1].slice(1);
+                            }
+                            break;
+                        }
+                        case "s":case "!":case "l":
+                        {
+                            if(ActualCell.length !== 1)
+                            {
+                                if(ActualCell[1] !== "-")
                                 {
-                                    break;
+                                    OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1][0] + "-" + OperationArray[OperationArray.length-1].slice(1);
                                 }
-                                default:
+                                else
                                 {
-                                    switch (OperationArray[OperationArray.length-1][OperationArray[OperationArray.length-1].length-1]) {
-                                        case ',':
-                                        {
-                                            break;
-                                        }
-                                        default:
-                                        {
-                                            OperationArray.push(x);
-                                            break;
-                                        }
-                                    }
-                                    break;
+                                    OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1][0] + OperationArray[OperationArray.length-1].slice(2);
                                 }
                             }
                         }
-                        break;
                     }
                     break;
                 }
             }
+            break;
         }
     }
 
-    var str:string = "";
-    for (var i:number = 0; i < OperationArray.length; ++i)
-    {
-        str += (" " + OperationArray[i]);
-    }
-    document.getElementById("Up").innerHTML = str;
+    StrHTML();
 }
 
 function Del(): void
@@ -281,24 +251,19 @@ function Del(): void
         }
         default:
         {
-            OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1].slice(0, -1);
+            if (OperationArray[OperationArray.length-1].length === 2 && OperationArray[OperationArray.length-1][0] === "-")
+            {
+                OperationArray.pop();
+            }
+            else
+            {
+                OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1].slice(0, -1);
+            }
             break;
         }
     }
 
-    var str:string = "";
-    for (var i:number = 0; i < OperationArray.length; ++i)
-    {
-        if (OperationArray[i].toString() === ',' || (i != 0 && ((OperationArray[i-1].toString() === '1' || OperationArray[i-1].toString() === '2' || OperationArray[i-1].toString() === '3' || OperationArray[i-1].toString() === '4' || OperationArray[i-1].toString() === '5' || OperationArray[i-1].toString() === '6' || OperationArray[i-1].toString() === '7' || OperationArray[i-1].toString() === '8' || OperationArray[i-1].toString() === '9' || OperationArray[i-1].toString() === '0' || OperationArray[i-1].toString() === ',') && (OperationArray[i].toString() === '1' || OperationArray[i].toString() === '2' || OperationArray[i].toString() === '3' || OperationArray[i].toString() === '4' || OperationArray[i].toString() === '5' || OperationArray[i].toString() === '6' || OperationArray[i].toString() === '7' || OperationArray[i].toString() === '8' || OperationArray[i].toString() === '9' || OperationArray[i].toString() === '0'))))
-        {
-            str += OperationArray[i].toString();
-        }
-        else
-        {
-            str += (" " + OperationArray[i].toString());
-        }
-    }
-    document.getElementById("Up").innerHTML = str;
+    StrHTML();
 }
 
 function AllDel(): void
@@ -311,30 +276,38 @@ function clickMenu(): void
 {
     var ArrClassFirst:NodeListOf<HTMLElement> = document.querySelectorAll('.First');
     var ArrClassSecond:NodeListOf<HTMLElement> = document.querySelectorAll('.Second');
-    if (bool == false)
+    var ArrClassButtonWithTwoFunction:NodeListOf<HTMLElement> = document.querySelectorAll('.ButtonWithTwoFunction');
+    switch (bool)
     {
-        console.log('false');
-        for (var i:number = 0; i < ArrClassFirst.length; ++i)
+        case false:
         {
-            ArrClassFirst[i].style.transform = "translate(0, -8vmin)";
+            for (var i:number = 0; i < ArrClassFirst.length; ++i)
+            {
+                ArrClassFirst[i].style.transform = "translate(0, -8vmin)";
+                ArrClassSecond[i].style.transform = "translate(0, -8vmin)";
+            }
+            ArrClassButtonWithTwoFunction[0].onclick = function onclick(event:MouseEvent){Add('^')};
+            ArrClassButtonWithTwoFunction[1].onclick = function onclick(event:MouseEvent){Add('s')};
+            ArrClassButtonWithTwoFunction[2].onclick = function onclick(event:MouseEvent){Add('!')};
+            ArrClassButtonWithTwoFunction[3].onclick = function onclick(event:MouseEvent){Add('l')};
+            ArrClassButtonWithTwoFunction[4].onclick = function onclick(event:MouseEvent){Add('z')};
+            bool = true;
+            break;
         }
-        for (var i:number = 0; i < ArrClassSecond.length; ++i)
+        case true:
         {
-            ArrClassSecond[i].style.transform = "translate(0, -8vmin)";
+            for (var i:number = 0; i < ArrClassFirst.length; ++i)
+            {
+                ArrClassFirst[i].style.transform = "translate(0, 0)";
+                ArrClassSecond[i].style.transform = "translate(0, 0)";
+            }
+            ArrClassButtonWithTwoFunction[0].onclick = function onclick(event:MouseEvent){Add('%')};
+            ArrClassButtonWithTwoFunction[1].onclick = function onclick(event:MouseEvent){Add('/')};
+            ArrClassButtonWithTwoFunction[2].onclick = function onclick(event:MouseEvent){Add('*')};
+            ArrClassButtonWithTwoFunction[3].onclick = function onclick(event:MouseEvent){Add('-')};
+            ArrClassButtonWithTwoFunction[4].onclick = function onclick(event:MouseEvent){Add('+')};
+            bool = false;
+            break;
         }
-        bool = true;
-    }
-    else
-    {
-        console.log('true');
-        for (var i:number = 0; i < ArrClassFirst.length; ++i)
-        {
-            ArrClassFirst[i].style.transform = "translate(0, 0)";
-        }
-        for (var i:number = 0; i < ArrClassSecond.length; ++i)
-        {
-            ArrClassSecond[i].style.transform = "translate(0, 0)";
-        }
-        bool = false;
     }
 }
