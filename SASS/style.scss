@@ -29,6 +29,11 @@ $bodyFirstColor: $orange;
   height: $height;
 }
 
+@font-face {
+  font-family: "Arial Black", Serif;
+  src: url("../Fonts/arial_black.ttf");
+}
+
 *
 {
   padding: 0;
