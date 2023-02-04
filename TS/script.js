@@ -267,6 +267,9 @@ function Del() {
                 if (OperationArray[OperationArray.length - 1].length === 2 && OperationArray[OperationArray.length - 1][0] === "-") {
                     OperationArray.pop();
                 }
+                else if (OperationArray[OperationArray.length - 1].length === 3 && OperationArray[OperationArray.length - 1][1] === "-") {
+                    OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1][0];
+                }
                 else {
                     OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1].slice(0, -1);
                 }
