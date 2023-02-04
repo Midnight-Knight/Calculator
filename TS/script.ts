@@ -87,43 +87,22 @@ function boolNumber(x:string)
 
 function StrHTML(x: string = "Up"): void {
     console.log(OperationArray.toString());
-    var str:string = "";
-    for (var i:number = 0; i < OperationArray.length; ++i)
-    {
+    let str = "";
+    for (let i = 0; i < OperationArray.length; ++i) {
         str += " ";
-        if (OperationArray[i][0] === "!")
-        {
-            str += "!";
-            str += "(";
-            if (OperationArray[i].length !== 1)
-            {
-                str += OperationArray[i].slice(1);
-            }
-            str += ")";
-        }
-        else if(OperationArray[i][0] === "s")
-        {
-            str += "√";
-            str += "(";
-            if (OperationArray[i].length !== 1)
-            {
-                str += OperationArray[i].slice(1);
-            }
-            str += ")";
-        }
-        else if(OperationArray[i][0] === "l")
-        {
-            str += "log";
-            str += "(";
-            if (OperationArray[i].length !== 1)
-            {
-                str += OperationArray[i].slice(1);
-            }
-            str += ")";
-        }
-        else
-        {
-            str += OperationArray[i];
+        const op = OperationArray[i];
+        switch (op[0]) {
+            case "!":
+                str += "(" + (op.length !== 1 ? op.slice(1) : "") + ")!";
+                break;
+            case "s":
+                str += "√(" + (op.length !== 1 ? op.slice(1) : "") + ")";
+                break;
+            case "l":
+                str += "log(" + (op.length !== 1 ? op.slice(1) : "") + ")";
+                break;
+            default:
+                str += op;
         }
     }
     document.getElementById(x).innerHTML = str;
@@ -168,7 +147,7 @@ function Add(x:string):void
                 }
                 case ",":
                 {
-                    if(boolSign(ActualCell, ",") === false && boolNumber(ActualCell) === true)
+                    if(boolSign(ActualCell, ",") === false && boolNumber(ActualCell) === true && ActualCell[0] !== "!")
                     {
                         OperationArray[OperationArray.length-1] += x;
                     }
@@ -215,7 +194,7 @@ function Add(x:string):void
                             }
                             break;
                         }
-                        case "s":case "!":case "l":
+                        case "s":case "l":
                         {
                             if(ActualCell.length !== 1)
                             {
@@ -228,6 +207,7 @@ function Add(x:string):void
                                     OperationArray[OperationArray.length-1] = OperationArray[OperationArray.length-1][0] + OperationArray[OperationArray.length-1].slice(2);
                                 }
                             }
+                            break;
                         }
                     }
                     break;
@@ -236,7 +216,6 @@ function Add(x:string):void
             break;
         }
     }
-
     StrHTML();
 }
 
@@ -270,48 +249,46 @@ function Del(): void
     StrHTML();
 }
 
-function AllDel(): void
-{
-    OperationArray.length = 0;
-    document.getElementById('Up').innerHTML = "";
-}
-
 function clickMenu(): void
 {
     var ArrClassFirst:NodeListOf<HTMLElement> = document.querySelectorAll('.First');
     var ArrClassSecond:NodeListOf<HTMLElement> = document.querySelectorAll('.Second');
     var ArrClassButtonWithTwoFunction:NodeListOf<HTMLElement> = document.querySelectorAll('.ButtonWithTwoFunction');
+    var translate:string;
     switch (bool)
     {
         case false:
         {
-            for (var i:number = 0; i < ArrClassFirst.length; ++i)
-            {
-                ArrClassFirst[i].style.transform = "translate(0, -8vmin)";
-                ArrClassSecond[i].style.transform = "translate(0, -8vmin)";
-            }
-            ArrClassButtonWithTwoFunction[0].onclick = function onclick(event:MouseEvent){Add('^')};
-            ArrClassButtonWithTwoFunction[1].onclick = function onclick(event:MouseEvent){Add('s')};
-            ArrClassButtonWithTwoFunction[2].onclick = function onclick(event:MouseEvent){Add('!')};
-            ArrClassButtonWithTwoFunction[3].onclick = function onclick(event:MouseEvent){Add('l')};
-            ArrClassButtonWithTwoFunction[4].onclick = function onclick(event:MouseEvent){Add('z')};
+            translate = "translate(0, -8vmin)";
+            ArrClassButtonWithTwoFunction[0].onclick = function onclick(event:MouseEvent){Add("^")};
+            ArrClassButtonWithTwoFunction[1].onclick = function onclick(event:MouseEvent){Add("s")};
+            ArrClassButtonWithTwoFunction[2].onclick = function onclick(event:MouseEvent){Add("!")};
+            ArrClassButtonWithTwoFunction[3].onclick = function onclick(event:MouseEvent){Add("l")};
+            ArrClassButtonWithTwoFunction[4].onclick = function onclick(event:MouseEvent){Add("z")};
             bool = true;
             break;
         }
         case true:
         {
-            for (var i:number = 0; i < ArrClassFirst.length; ++i)
-            {
-                ArrClassFirst[i].style.transform = "translate(0, 0)";
-                ArrClassSecond[i].style.transform = "translate(0, 0)";
-            }
-            ArrClassButtonWithTwoFunction[0].onclick = function onclick(event:MouseEvent){Add('%')};
-            ArrClassButtonWithTwoFunction[1].onclick = function onclick(event:MouseEvent){Add('/')};
-            ArrClassButtonWithTwoFunction[2].onclick = function onclick(event:MouseEvent){Add('*')};
-            ArrClassButtonWithTwoFunction[3].onclick = function onclick(event:MouseEvent){Add('-')};
-            ArrClassButtonWithTwoFunction[4].onclick = function onclick(event:MouseEvent){Add('+')};
+            translate = "translate(0, 0)";
+            ArrClassButtonWithTwoFunction[0].onclick = function onclick(event:MouseEvent){Add("%")};
+            ArrClassButtonWithTwoFunction[1].onclick = function onclick(event:MouseEvent){Add("/")};
+            ArrClassButtonWithTwoFunction[2].onclick = function onclick(event:MouseEvent){Add("*")};
+            ArrClassButtonWithTwoFunction[3].onclick = function onclick(event:MouseEvent){Add("-")};
+            ArrClassButtonWithTwoFunction[4].onclick = function onclick(event:MouseEvent){Add("+")};
             bool = false;
             break;
         }
     }
+    for (var i:number = 0; i < ArrClassFirst.length; ++i)
+    {
+        ArrClassFirst[i].style.transform = translate;
+        ArrClassSecond[i].style.transform = translate;
+    }
+}
+
+function AllDel(): void
+{
+    OperationArray.length = 0;
+    document.getElementById('Up').innerHTML = "";
 }

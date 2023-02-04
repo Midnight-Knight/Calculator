@@ -73,32 +73,19 @@ function StrHTML(x) {
     var str = "";
     for (var i = 0; i < OperationArray.length; ++i) {
         str += " ";
-        if (OperationArray[i][0] === "!") {
-            str += "!";
-            str += "(";
-            if (OperationArray[i].length !== 1) {
-                str += OperationArray[i].slice(1);
-            }
-            str += ")";
-        }
-        else if (OperationArray[i][0] === "s") {
-            str += "√";
-            str += "(";
-            if (OperationArray[i].length !== 1) {
-                str += OperationArray[i].slice(1);
-            }
-            str += ")";
-        }
-        else if (OperationArray[i][0] === "l") {
-            str += "log";
-            str += "(";
-            if (OperationArray[i].length !== 1) {
-                str += OperationArray[i].slice(1);
-            }
-            str += ")";
-        }
-        else {
-            str += OperationArray[i];
+        var op = OperationArray[i];
+        switch (op[0]) {
+            case "!":
+                str += "(" + (op.length !== 1 ? op.slice(1) : "") + ")!";
+                break;
+            case "s":
+                str += "√(" + (op.length !== 1 ? op.slice(1) : "") + ")";
+                break;
+            case "l":
+                str += "log(" + (op.length !== 1 ? op.slice(1) : "") + ")";
+                break;
+            default:
+                str += op;
         }
     }
     document.getElementById(x).innerHTML = str;
@@ -177,7 +164,7 @@ function Add(x) {
                         }
                     case ",":
                         {
-                            if (boolSign(ActualCell, ",") === false && boolNumber(ActualCell) === true) {
+                            if (boolSign(ActualCell, ",") === false && boolNumber(ActualCell) === true && ActualCell[0] !== "!") {
                                 OperationArray[OperationArray.length - 1] += x;
                             }
                             break;
@@ -234,7 +221,6 @@ function Add(x) {
                                         break;
                                     }
                                 case "s":
-                                case "!":
                                 case "l":
                                     {
                                         if (ActualCell.length !== 1) {
@@ -245,6 +231,7 @@ function Add(x) {
                                                 OperationArray[OperationArray.length - 1] = OperationArray[OperationArray.length - 1][0] + OperationArray[OperationArray.length - 1].slice(2);
                                             }
                                         }
+                                        break;
                                     }
                             }
                             break;
@@ -278,43 +265,42 @@ function Del() {
     }
     StrHTML();
 }
-function AllDel() {
-    OperationArray.length = 0;
-    document.getElementById('Up').innerHTML = "";
-}
 function clickMenu() {
     var ArrClassFirst = document.querySelectorAll('.First');
     var ArrClassSecond = document.querySelectorAll('.Second');
     var ArrClassButtonWithTwoFunction = document.querySelectorAll('.ButtonWithTwoFunction');
+    var translate;
     switch (bool) {
         case false:
             {
-                for (var i = 0; i < ArrClassFirst.length; ++i) {
-                    ArrClassFirst[i].style.transform = "translate(0, -8vmin)";
-                    ArrClassSecond[i].style.transform = "translate(0, -8vmin)";
-                }
-                ArrClassButtonWithTwoFunction[0].onclick = function onclick(event) { Add('^'); };
-                ArrClassButtonWithTwoFunction[1].onclick = function onclick(event) { Add('s'); };
-                ArrClassButtonWithTwoFunction[2].onclick = function onclick(event) { Add('!'); };
-                ArrClassButtonWithTwoFunction[3].onclick = function onclick(event) { Add('l'); };
-                ArrClassButtonWithTwoFunction[4].onclick = function onclick(event) { Add('z'); };
+                translate = "translate(0, -8vmin)";
+                ArrClassButtonWithTwoFunction[0].onclick = function onclick(event) { Add("^"); };
+                ArrClassButtonWithTwoFunction[1].onclick = function onclick(event) { Add("s"); };
+                ArrClassButtonWithTwoFunction[2].onclick = function onclick(event) { Add("!"); };
+                ArrClassButtonWithTwoFunction[3].onclick = function onclick(event) { Add("l"); };
+                ArrClassButtonWithTwoFunction[4].onclick = function onclick(event) { Add("z"); };
                 bool = true;
                 break;
             }
         case true:
             {
-                for (var i = 0; i < ArrClassFirst.length; ++i) {
-                    ArrClassFirst[i].style.transform = "translate(0, 0)";
-                    ArrClassSecond[i].style.transform = "translate(0, 0)";
-                }
-                ArrClassButtonWithTwoFunction[0].onclick = function onclick(event) { Add('%'); };
-                ArrClassButtonWithTwoFunction[1].onclick = function onclick(event) { Add('/'); };
-                ArrClassButtonWithTwoFunction[2].onclick = function onclick(event) { Add('*'); };
-                ArrClassButtonWithTwoFunction[3].onclick = function onclick(event) { Add('-'); };
-                ArrClassButtonWithTwoFunction[4].onclick = function onclick(event) { Add('+'); };
+                translate = "translate(0, 0)";
+                ArrClassButtonWithTwoFunction[0].onclick = function onclick(event) { Add("%"); };
+                ArrClassButtonWithTwoFunction[1].onclick = function onclick(event) { Add("/"); };
+                ArrClassButtonWithTwoFunction[2].onclick = function onclick(event) { Add("*"); };
+                ArrClassButtonWithTwoFunction[3].onclick = function onclick(event) { Add("-"); };
+                ArrClassButtonWithTwoFunction[4].onclick = function onclick(event) { Add("+"); };
                 bool = false;
                 break;
             }
     }
+    for (var i = 0; i < ArrClassFirst.length; ++i) {
+        ArrClassFirst[i].style.transform = translate;
+        ArrClassSecond[i].style.transform = translate;
+    }
+}
+function AllDel() {
+    OperationArray.length = 0;
+    document.getElementById('Up').innerHTML = "";
 }
 //# sourceMappingURL=script.js.map
