@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Arial Black", Serif;
+  font-family: "AB";
   src: url("../Fonts/arial_black.ttf");
 }
 * {
   padding: 0;
   margin: 0;
-  font-family: "Arial Black", Serif;
+  font-family: "AB";
   font-size: 5vmin;
 }
 
