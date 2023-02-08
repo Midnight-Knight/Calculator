@@ -77,6 +77,7 @@ document.onkeyup = function (x) {
                 return;
             }
         case "Enter":
+        case "NumpadEnter":
             {
                 calculation();
                 return;

@@ -56,7 +56,7 @@ document.onkeyup = function (x): void {
             Add("-");
             return;
         }
-        case "Enter":
+        case "Enter":case "NumpadEnter":
         {
             calculation();
             return;
