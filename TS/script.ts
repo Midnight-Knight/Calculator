@@ -500,7 +500,7 @@ function ConvertPolish(x:Array<string>):void
                     }
                     else
                     {
-                        PolishArray[PolishArray.length-1] = PolishStack.pop();
+                        PolishArray.push(PolishStack.pop());
                     }
                 }
                 break;
@@ -526,7 +526,7 @@ function ConvertPolish(x:Array<string>):void
                             }
                             else
                             {
-                                PolishArray[PolishArray.length-1] = PolishStack.pop();
+                                PolishArray.push(PolishStack.pop());
                             }
                         }
                         break;
@@ -561,7 +561,7 @@ function ConvertPolish(x:Array<string>):void
                     }
                     else
                     {
-                        PolishArray[PolishArray.length-1] = PolishStack.pop();
+                        PolishArray.push(PolishStack.pop());
                     }
                 }
                 break;

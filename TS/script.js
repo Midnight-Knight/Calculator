@@ -512,7 +512,7 @@ function ConvertPolish(x) {
                             break;
                         }
                         else {
-                            PolishArray[PolishArray.length - 1] = PolishStack.pop();
+                            PolishArray.push(PolishStack.pop());
                         }
                     }
                     break;
@@ -533,7 +533,7 @@ function ConvertPolish(x) {
                                         break;
                                     }
                                     else {
-                                        PolishArray[PolishArray.length - 1] = PolishStack.pop();
+                                        PolishArray.push(PolishStack.pop());
                                     }
                                 }
                                 break;
@@ -565,7 +565,7 @@ function ConvertPolish(x) {
                             break;
                         }
                         else {
-                            PolishArray[PolishArray.length - 1] = PolishStack.pop();
+                            PolishArray.push(PolishStack.pop());
                         }
                     }
                     break;
