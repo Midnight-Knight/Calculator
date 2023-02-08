@@ -56,6 +56,11 @@ document.onkeyup = function (x): void {
             Add("-");
             return;
         }
+        case "Enter":
+        {
+            calculation();
+            return;
+        }
     }
 }
 function Summation(x:number, y:number): number

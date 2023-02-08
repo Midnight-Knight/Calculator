@@ -75,6 +75,11 @@ document.onkeyup = function (x) {
                 Add("-");
                 return;
             }
+        case "Enter":
+            {
+                calculation();
+                return;
+            }
     }
 };
 function Summation(x, y) {
