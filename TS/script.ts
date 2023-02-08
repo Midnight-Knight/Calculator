@@ -163,7 +163,20 @@ function Add(x:string):void
                     {
                         case "0":case "1":case "2":case "3":case "4":case "5":case "6":case "7":case "8":case "9":case "s":case "!":case "l":case "n":case ".":
                         {
-                            OperationArray[OperationArray.length-1] += x;
+                            if (boolSign(ActualCell, ".") === true)
+                            {
+                                if ((ActualCell.length-1) - ActualCell.indexOf(".") < 9)
+                                {
+                                    OperationArray[OperationArray.length - 1] += x;
+                                }
+                            }
+                            else if ((ActualCell[0] === "s" || ActualCell[0] === "!" || ActualCell[0] === "l" || ActualCell[0] === "n" || ActualCell === "-") && ActualCell.length < 10) {
+                                OperationArray[OperationArray.length - 1] += x;
+                            }
+                            else if (ActualCell.length < 9)
+                            {
+                                OperationArray[OperationArray.length - 1] += x;
+                            }
                             break;
                         }
                         case "+":case "-":case "*":case "/":case "%":case "^":

@@ -170,7 +170,17 @@ function Add(x) {
                                 case "n":
                                 case ".":
                                     {
-                                        OperationArray[OperationArray.length - 1] += x;
+                                        if (boolSign(ActualCell, ".") === true) {
+                                            if ((ActualCell.length - 1) - ActualCell.indexOf(".") < 9) {
+                                                OperationArray[OperationArray.length - 1] += x;
+                                            }
+                                        }
+                                        else if ((ActualCell[0] === "s" || ActualCell[0] === "!" || ActualCell[0] === "l" || ActualCell[0] === "n" || ActualCell === "-") && ActualCell.length < 10) {
+                                            OperationArray[OperationArray.length - 1] += x;
+                                        }
+                                        else if (ActualCell.length < 9) {
+                                            OperationArray[OperationArray.length - 1] += x;
+                                        }
                                         break;
                                     }
                                 case "+":
