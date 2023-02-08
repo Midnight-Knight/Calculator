@@ -1,5 +1,15 @@
 var OperationArray = new Array(0);
 var bool = false;
+var a = document.getElementsByName("button");
+for (var i; i < a.length; ++i) {
+    a[i].onkeyup = function onkeyup(event) { if (event.key.toLowerCase() == "enter") {
+        return false;
+    } };
+    a[i].onkeydown = function onkeydown(event) { if (event.key.toLowerCase() == "enter") {
+        return false;
+    } };
+}
+a = null;
 document.onkeyup = function (x) {
     switch (x.key.toLowerCase()) {
         case "0":
@@ -174,9 +184,9 @@ function StrHTML(x) {
     if (x === void 0) { x = "Up"; }
     console.log(OperationArray.toString());
     var str = "";
-    for (var i = 0; i < OperationArray.length; ++i) {
+    for (var i_1 = 0; i_1 < OperationArray.length; ++i_1) {
         str += " ";
-        var op = OperationArray[i];
+        var op = OperationArray[i_1];
         switch (op[0]) {
             case "!":
                 str += "(" + (op.length !== 1 ? op.slice(1) : "") + ")!";

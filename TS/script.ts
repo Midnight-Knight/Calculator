@@ -1,5 +1,12 @@
 let OperationArray:Array<string> = new Array(0);
 let bool:boolean = false;
+let a:NodeListOf<HTMLElement> = document.getElementsByName("button");
+for (var i:number; i < a.length; ++i)
+{
+    a[i].onkeyup = function onkeyup (event:KeyboardEvent  ) {if (event.key.toLowerCase() == "enter") {return false;}};
+    a[i].onkeydown = function onkeydown (event:KeyboardEvent) {if (event.key.toLowerCase() == "enter") {return false;}};
+}
+a = null;
 
 document.onkeyup = function (x): void {
     switch (x.key.toLowerCase())
