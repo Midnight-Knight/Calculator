@@ -11,7 +11,7 @@ document.onkeyup = function (x): void {
         case "s":
         {
             Add(x.key.toLowerCase());
-            return
+            return;
         }
         case ",":
         {
@@ -44,6 +44,11 @@ document.onkeyup = function (x): void {
         case "Period":case "Comma":
         {
             Add(".");
+            return;
+        }
+        case "Backslash":
+        {
+            Add("/");
             return;
         }
     }

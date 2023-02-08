@@ -64,6 +64,11 @@ document.onkeyup = function (x) {
                 Add(".");
                 return;
             }
+        case "Backslash":
+            {
+                Add("/");
+                return;
+            }
     }
 };
 function Summation(x, y) {
