@@ -492,9 +492,9 @@ function ConvertPolish(x:Array<string>):void
                         PolishStack.push(OperationArray[i]);
                         break;
                     }
-                    else if (PolishStack[PolishStack.length-1] !== "+" && PolishStack[PolishStack.length-1] !== "-")
+                    else if (PolishStack[PolishStack.length-1] === "+" || PolishStack[PolishStack.length-1] === "-")
                     {
-                        PolishArray[PolishArray.length-1] = PolishStack.pop();
+                        PolishArray.push(PolishStack.pop());
                         PolishStack.push(OperationArray[i]);
                         break;
                     }
@@ -597,6 +597,8 @@ function ConvertPolish(x:Array<string>):void
             }
         }
     }
+    console.log(PolishArray.toString());
+    console.log(PolishStack.toString());
     while (PolishStack.length !== 0)
     {
         PolishArray.push(PolishStack.pop());
