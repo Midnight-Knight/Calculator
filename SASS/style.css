@@ -9,7 +9,7 @@
   font-size: 5vmin;
 }
 
-button, button:active, button:focus {
+a, a:active, a:focus {
   border: none;
 }
 
@@ -68,7 +68,7 @@ body > #Calculator > #panel {
   justify-content: space-between;
   align-content: space-between;
 }
-body > #Calculator > #panel > button {
+body > #Calculator > #panel > a {
   width: 10.5vmin;
   height: 8vmin;
   box-shadow: 0 0 1vmin 1vmin rgba(127, 127, 127, 0.5);
@@ -77,7 +77,13 @@ body > #Calculator > #panel > button {
   border: none;
   transition: 0.75s box-shadow;
 }
-body > #Calculator > #panel > button > div {
+body > #Calculator > #panel > a > div {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   position: relative;
   width: 10.5vmin;
   height: 8vmin;
@@ -88,23 +94,23 @@ body > #Calculator > #panel > button > div {
   align-items: center;
   transition: 1s transform, 0.75s color, 0.75s background;
 }
-body > #Calculator > #panel > button > .First {
+body > #Calculator > #panel > a > .First {
   transform: translate(0, 0);
 }
-body > #Calculator > #panel > button > .Second {
+body > #Calculator > #panel > a > .Second {
   transform: translate(0, 0);
 }
-body > #Calculator > #panel > button > .Orange {
+body > #Calculator > #panel > a > .Orange {
   color: rgb(255, 127, 0);
 }
-body > #Calculator > #panel > button:hover {
+body > #Calculator > #panel > a:hover {
   box-shadow: rgba(0, 0, 0, 0.5);
 }
-body > #Calculator > #panel > button:hover > div {
+body > #Calculator > #panel > a:hover > div {
   color: rgb(255, 255, 255);
   background: rgb(0, 0, 0);
 }
-body > #Calculator > #panel > button:hover > .Orange {
+body > #Calculator > #panel > a:hover > .Orange {
   color: rgb(0, 127, 255);
 }
 body > #Calculator > #panel > .ButtonOrange {

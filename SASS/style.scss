@@ -42,7 +42,7 @@ $bodyFirstColor: $orange;
   font-size: 5vmin;
 }
 
-button, button:active, button:focus
+a, a:active, a:focus
 {
   border:none;
 }
@@ -100,7 +100,7 @@ body
         grid-template-row: repeat(5, 8vmin);
         justify-content: space-between;
         align-content: space-between;
-        > button
+        > a
         {
           @include WidthAndHeight(10.5vmin, 8vmin);
           box-shadow: 0 0 1vmin 1vmin $grayA;
@@ -110,6 +110,12 @@ body
           transition: 0.75s box-shadow;
           > div
           {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
             position: relative;
             @include WidthAndHeight(10.5vmin, 8vmin);
             @include ColorAndBackground($black, $white);
@@ -129,7 +135,7 @@ body
             color: $orange;
           }
         }
-        > button:hover
+        > a:hover
         {
           box-shadow: $blackA;
           > div
