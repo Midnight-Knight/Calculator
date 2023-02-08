@@ -8,7 +8,7 @@ document.onkeyup = function (x): void {
         case "5":case "6":case "7":case "8":case "9":
         case "+":case "-":case "/":case "*":case "%":
         case ".":case "!":case "l":case "n":case "z":
-        case "s":
+        case "s":case "^":
         {
             Add(x.key.toLowerCase());
             return;
@@ -49,6 +49,11 @@ document.onkeyup = function (x): void {
         case "Backslash":
         {
             Add("/");
+            return;
+        }
+        case "Minus":
+        {
+            Add("-");
             return;
         }
     }

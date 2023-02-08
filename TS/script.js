@@ -23,6 +23,7 @@ document.onkeyup = function (x) {
         case "n":
         case "z":
         case "s":
+        case "^":
             {
                 Add(x.key.toLowerCase());
                 return;
@@ -67,6 +68,11 @@ document.onkeyup = function (x) {
         case "Backslash":
             {
                 Add("/");
+                return;
+            }
+        case "Minus":
+            {
+                Add("-");
                 return;
             }
     }
