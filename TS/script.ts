@@ -42,6 +42,10 @@ function Degree(x:number, y:number): number
 
 function Sqrt(x:number): number
 {
+    if (x === 0)
+    {
+        return 0;
+    }
     var root: number = x;
     var last: number;
     do {

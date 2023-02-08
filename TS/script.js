@@ -27,6 +27,9 @@ function Degree(x, y) {
     return parseFloat(Number(result).toFixed(9));
 }
 function Sqrt(x) {
+    if (x === 0) {
+        return 0;
+    }
     var root = x;
     var last;
     do {
