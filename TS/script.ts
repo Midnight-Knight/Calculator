@@ -7,20 +7,21 @@ document.onkeyup = function (x): void {
         case "0":case "1":case "2":case "3":case "4":
         case "5":case "6":case "7":case "8":case "9":
         case "+":case "-":case "/":case "*":case "%":
-        case ".":case "!":
+        case ".":case "!":case "l":case "n":case "z":
+        case "s":
         {
             Add(x.key.toLowerCase());
-            break;
+            return
         }
         case ",":
         {
             Add(".");
-            break;
+            return;
         }
         case "=":
         {
             calculation();
-            break;
+            return;
         }
     }
     switch (x.code)
@@ -28,17 +29,22 @@ document.onkeyup = function (x): void {
         case "KeyL":case "KeyZ":case "KeyN":case "KeyS":
         {
             Add(x.code[x.code.length-1].toLowerCase());
-            break;
+            return;
         }
         case "KeyC":case "Delete":
         {
             AllDel();
-            break;
+            return;
         }
         case "Backspace":
         {
             Del();
-            break;
+            return;
+        }
+        case "Period":case "Comma":
+        {
+            Add(".");
+            return;
         }
     }
 }
