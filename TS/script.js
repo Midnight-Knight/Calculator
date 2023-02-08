@@ -237,6 +237,9 @@ function Add(x) {
                     case "8":
                     case "9":
                         {
+                            if (ActualCell.length === 1 && ActualCell === "0") {
+                                return;
+                            }
                             switch (ActualCell[ActualCell.length - 1]) {
                                 case "0":
                                 case "1":
