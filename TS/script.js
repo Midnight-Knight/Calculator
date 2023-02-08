@@ -1,19 +1,19 @@
 var OperationArray = new Array(0);
 var bool = false;
 function Summation(x, y) {
-    return x + y;
+    return parseFloat(Number(x + y).toFixed(9));
 }
 function Subtraction(x, y) {
-    return x - y;
+    return parseFloat(Number(x - y).toFixed(9));
 }
 function Multiplication(x, y) {
-    return x * y;
+    return parseFloat(Number(x * y).toFixed(9));
 }
 function Division(x, y) {
-    return x / y;
+    return parseFloat(Number(x / y).toFixed(9));
 }
 function Remains(x, y) {
-    return x % y;
+    return parseFloat(Number(x % y).toFixed(9));
 }
 function Degree(x, y) {
     var result = 1;
@@ -24,19 +24,35 @@ function Degree(x, y) {
         x *= x;
         y = Math.floor(y / 2);
     }
-    return result;
+    return parseFloat(Number(result).toFixed(9));
 }
-function Root(x) {
+function Sqrt(x) {
     var root = x;
     var last;
     do {
         last = root;
         root = (root + x / root) / 2;
     } while (root !== last);
-    return root;
+    return parseFloat(Number(root).toFixed(9));
 }
-function log(x) {
-    return Math.log(x);
+function lg(x) {
+    return parseFloat(Number(Math.log(x) / Math.LN10).toFixed(9));
+}
+function ln(x) {
+    return parseFloat(Number(Math.log(x)).toFixed(9));
+}
+function factorial(x) {
+    x = Math.floor(x);
+    if (x === 0) {
+        return 1;
+    }
+    else {
+        var result = 1;
+        for (var i = 1; i <= x; ++i) {
+            result *= i;
+        }
+        return parseInt(Number(result).toString());
+    }
 }
 function boolSign(x, y) {
     for (var i = 0; i < x.length; ++i) {
@@ -82,7 +98,10 @@ function StrHTML(x) {
                 str += "√(" + (op.length !== 1 ? op.slice(1) : "") + ")";
                 break;
             case "l":
-                str += "log(" + (op.length !== 1 ? op.slice(1) : "") + ")";
+                str += "lg(" + (op.length !== 1 ? op.slice(1) : "") + ")";
+                break;
+            case "n":
+                str += "ln(" + (op.length !== 1 ? op.slice(1) : "") + ")";
                 break;
             default:
                 str += op;
@@ -108,6 +127,7 @@ function Add(x) {
                     case "s":
                     case "!":
                     case "l":
+                    case "n":
                         {
                             OperationArray.push(x);
                             break;
@@ -144,7 +164,8 @@ function Add(x) {
                                 case "s":
                                 case "!":
                                 case "l":
-                                case ",":
+                                case "n":
+                                case ".":
                                     {
                                         OperationArray[OperationArray.length - 1] += x;
                                         break;
@@ -162,9 +183,9 @@ function Add(x) {
                             }
                             break;
                         }
-                    case ",":
+                    case ".":
                         {
-                            if (boolSign(ActualCell, ",") === false && boolNumber(ActualCell) === true && ActualCell[0] !== "!") {
+                            if (boolSign(ActualCell, ".") === false && boolNumber(ActualCell) === true && ActualCell[0] !== "!") {
                                 OperationArray[OperationArray.length - 1] += x;
                             }
                             break;
@@ -176,7 +197,7 @@ function Add(x) {
                     case "%":
                     case "^":
                         {
-                            if (ActualCell[0] === "l") {
+                            if (ActualCell[0] === "l" || ActualCell[0] === "n") {
                                 switch (ActualCell[1]) {
                                     case "0":
                                         {
@@ -192,6 +213,8 @@ function Add(x) {
                                         }
                                 }
                             }
+                            else if (ActualCell === "0" && OperationArray[OperationArray.length - 2] === "/") {
+                            }
                             else if (boolNumber(ActualCell) === true) {
                                 OperationArray.push(x);
                             }
@@ -200,6 +223,7 @@ function Add(x) {
                     case "s":
                     case "l":
                     case "!":
+                    case "n":
                         {
                             if (boolSign(ActualCell, "+") === true || boolSign(ActualCell, "-") === true || boolSign(ActualCell, "*") === true || boolSign(ActualCell, "/") === true || boolSign(ActualCell, "%") === true || boolSign(ActualCell, "^") === true) {
                                 OperationArray.push(x);
@@ -278,7 +302,8 @@ function clickMenu() {
                 ArrClassButtonWithTwoFunction[1].onclick = function onclick(event) { Add("s"); };
                 ArrClassButtonWithTwoFunction[2].onclick = function onclick(event) { Add("!"); };
                 ArrClassButtonWithTwoFunction[3].onclick = function onclick(event) { Add("l"); };
-                ArrClassButtonWithTwoFunction[4].onclick = function onclick(event) { Add("z"); };
+                ArrClassButtonWithTwoFunction[4].onclick = function onclick(event) { Add("n"); };
+                ArrClassButtonWithTwoFunction[5].onclick = function onclick(event) { Add("z"); };
                 bool = true;
                 break;
             }
@@ -290,6 +315,7 @@ function clickMenu() {
                 ArrClassButtonWithTwoFunction[2].onclick = function onclick(event) { Add("*"); };
                 ArrClassButtonWithTwoFunction[3].onclick = function onclick(event) { Add("-"); };
                 ArrClassButtonWithTwoFunction[4].onclick = function onclick(event) { Add("+"); };
+                ArrClassButtonWithTwoFunction[5].onclick = function onclick(event) { Add("."); };
                 bool = false;
                 break;
             }
@@ -302,5 +328,243 @@ function clickMenu() {
 function AllDel() {
     OperationArray.length = 0;
     document.getElementById('Up').innerHTML = "";
+    document.getElementById('Bottom').innerHTML = "";
+}
+function calculation() {
+    var ActualStrElem = OperationArray[OperationArray.length - 1];
+    if (OperationArray.length != 0 && ((OperationArray.length % 2) === 1)) {
+        switch (OperationArray.length) {
+            case 1:
+                {
+                    switch (ActualStrElem[0]) {
+                        case "l":
+                        case "n":
+                        case "s":
+                        case "!":
+                            {
+                                if (ActualStrElem[ActualStrElem.length - 1] !== "." && ActualStrElem !== "l" && ActualStrElem !== "l0" && ActualStrElem !== "n" && ActualStrElem !== "n0" && ActualStrElem !== "!" && ActualStrElem !== "s") {
+                                    StrAnswerHTML(SpecOperationCalculation(ActualStrElem));
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                if (ActualStrElem[ActualStrElem.length - 1] !== ".") {
+                                    StrAnswerHTML(ActualStrElem);
+                                }
+                                break;
+                            }
+                    }
+                    break;
+                }
+            default:
+                {
+                    if (ActualStrElem[ActualStrElem.length - 1] !== "." && ActualStrElem !== "l" && ActualStrElem !== "l0" && ActualStrElem !== "n" && ActualStrElem !== "n0" && ActualStrElem !== "!" && ActualStrElem !== "s") {
+                        ConvertPolish(OperationArray);
+                    }
+                    break;
+                }
+        }
+    }
+}
+function SpecOperationCalculation(x) {
+    switch (x[0]) {
+        case "l":
+            {
+                return lg(parseFloat(x.slice(1))).toString();
+                break;
+            }
+        case "n":
+            {
+                return ln(parseFloat(x.slice(1))).toString();
+                break;
+            }
+        case "s":
+            {
+                return Sqrt(parseFloat(x.slice(1))).toString();
+                break;
+            }
+        case "!":
+            {
+                return factorial(parseFloat(x.slice(1))).toString();
+                break;
+            }
+    }
+}
+function ConvertPolish(x) {
+    var PolishArray = new Array();
+    var PolishStack = new Array();
+    for (var i = 0; i < OperationArray.length; ++i) {
+        switch (OperationArray[i][0]) {
+            case "l":
+            case "n":
+            case "s":
+            case "!":
+                {
+                    PolishArray.push(SpecOperationCalculation(OperationArray[i]));
+                    break;
+                }
+            case "+":
+                {
+                    while (true) {
+                        if (PolishStack.length === 0) {
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                        else if (PolishStack[PolishStack.length - 1] !== "+" && PolishStack[PolishStack.length - 1] !== "-") {
+                            PolishArray[PolishArray.length - 1] = PolishStack.pop();
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                        else {
+                            PolishArray[PolishArray.length - 1] = PolishStack.pop();
+                        }
+                    }
+                    break;
+                }
+            case "-":
+                {
+                    switch (OperationArray[i].length) {
+                        case 1:
+                            {
+                                while (true) {
+                                    if (PolishStack.length === 0) {
+                                        PolishStack.push(OperationArray[i]);
+                                        break;
+                                    }
+                                    else if (PolishStack[PolishStack.length - 1] === "+" || PolishStack[PolishStack.length - 1] === "-") {
+                                        PolishArray.push(PolishStack.pop());
+                                        PolishStack.push(OperationArray[i]);
+                                        break;
+                                    }
+                                    else {
+                                        PolishArray[PolishArray.length - 1] = PolishStack.pop();
+                                    }
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                PolishArray.push(SpecOperationCalculation(OperationArray[i]));
+                                break;
+                            }
+                    }
+                    break;
+                }
+            case "*":
+            case "/":
+            case "%":
+                {
+                    while (true) {
+                        if (PolishStack.length === 0) {
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                        else if (PolishStack[PolishStack.length - 1] === "*" || PolishStack[PolishStack.length - 1] === "/" || PolishStack[PolishStack.length - 1] === "%") {
+                            PolishArray.push(PolishStack.pop());
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                        else if (PolishStack[PolishStack.length - 1] === "+" || PolishStack[PolishStack.length - 1] === "-") {
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                        else {
+                            PolishArray[PolishArray.length - 1] = PolishStack.pop();
+                        }
+                    }
+                    break;
+                }
+            case "^":
+                {
+                    while (true) {
+                        if (PolishStack.length === 0) {
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                        else if (PolishStack[PolishStack.length - 1] === "^") {
+                            PolishArray.push(PolishStack.pop());
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                        else {
+                            PolishStack.push(OperationArray[i]);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            default:
+                {
+                    console.log(OperationArray[i]);
+                    PolishArray.push(OperationArray[i]);
+                    break;
+                }
+        }
+    }
+    while (PolishStack.length !== 0) {
+        PolishArray.push(PolishStack.pop());
+    }
+    console.log(PolishArray.toString());
+    PolishCalculation(PolishArray);
+}
+function PolishCalculation(x) {
+    var oper = false;
+    while (x.length !== 1) {
+        oper = false;
+        for (var i = 0; i < x.length; ++i) {
+            switch (x[i]) {
+                case "+":
+                    {
+                        x[i] = Summation(parseFloat(x[i - 2]), parseFloat(x[i - 1])).toString();
+                        x.splice(i - 2, 2);
+                        oper = true;
+                        break;
+                    }
+                case "-":
+                    {
+                        x[i] = Subtraction(parseFloat(x[i - 2]), parseFloat(x[i - 1])).toString();
+                        x.splice(i - 2, 2);
+                        oper = true;
+                        break;
+                    }
+                case "*":
+                    {
+                        x[i] = Multiplication(parseFloat(x[i - 2]), parseFloat(x[i - 1])).toString();
+                        x.splice(i - 2, 2);
+                        oper = true;
+                        break;
+                    }
+                case "/":
+                    {
+                        x[i] = Division(parseFloat(x[i - 2]), parseFloat(x[i - 1])).toString();
+                        x.splice(i - 2, 2);
+                        oper = true;
+                        break;
+                    }
+                case "%":
+                    {
+                        x[i] = Remains(parseFloat(x[i - 2]), parseFloat(x[i - 1])).toString();
+                        x.splice(i - 2, 2);
+                        oper = true;
+                        break;
+                    }
+                case "^":
+                    {
+                        x[i] = Degree(parseFloat(x[i - 2]), parseFloat(x[i - 1])).toString();
+                        x.splice(i - 2, 2);
+                        oper = true;
+                        break;
+                    }
+            }
+            if (oper === true) {
+                break;
+            }
+        }
+    }
+    StrAnswerHTML(x[0]);
+}
+function StrAnswerHTML(x) {
+    document.getElementById("Bottom").innerHTML = x;
 }
 //# sourceMappingURL=script.js.map
