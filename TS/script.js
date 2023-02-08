@@ -34,6 +34,7 @@ document.onkeyup = function (x) {
                 return;
             }
         case "=":
+        case "enter":
             {
                 calculation();
                 return;

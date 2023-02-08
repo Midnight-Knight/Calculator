@@ -18,7 +18,7 @@ document.onkeyup = function (x): void {
             Add(".");
             return;
         }
-        case "=":
+        case "=":case "enter":
         {
             calculation();
             return;
